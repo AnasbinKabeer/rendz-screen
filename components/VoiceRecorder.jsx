@@ -185,7 +185,7 @@
 //         }}
 //       ></canvas>
 // <div className="flex gap-1">
-  
+
 //       {/* Record / Stop Button */}
 //       {!recording ? (
 //         <button
@@ -234,9 +234,9 @@ const VoiceRecorder = () => {
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
- 
 
- const fileName = "APK123"
+
+  const fileName = "APK123"
   const canvasRef = useRef(null);
   const analyserRef = useRef(null);
   const audioContextRef = useRef(null);
@@ -330,115 +330,122 @@ const VoiceRecorder = () => {
 
 
 
+   const visualize = () => {
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext("2d");
+  const analyser = analyserRef.current;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
 
-  const visualize = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const analyser = analyserRef.current;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+  // keep an array of animated bar heights
+  const barHeights = new Array(bufferLength).fill(0);
 
-    const draw = () => {
-      analyser.getByteFrequencyData(dataArray);
+  const draw = () => {
+    analyser.getByteFrequencyData(dataArray);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const barWidth = (canvas.width / bufferLength) * 1.5;
-      let x = 0;
+    const barWidth = (canvas.width / bufferLength) * 1.5;
+    let x = 0;
 
-      dataArray.forEach((value, i) => {
-        const barHeight = value * 0.5;
-        const r = 255 - value;
-        const g = value * 0.5;
-        const b = 50;
+    dataArray.forEach((value, i) => {
+      const targetHeight = (value / 255) * canvas.height;
 
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
-        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
-        x += barWidth + 1;
-
-        // GSAP animation
-        gsap.to(ctx, { duration: 0.2, ease: "power2.out" });
+      // animate the height using GSAP
+      gsap.to(barHeights, {
+        duration: 0.2,
+        [i]: targetHeight,
+        ease: "power2.out"
       });
 
-      animationFrameRef.current = requestAnimationFrame(draw);
-    };
+      const barHeight = barHeights[i];
 
-    draw();
+      const r = 255 - value;
+      const g = value;
+      const b = 50;
+
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+      x += barWidth + 1;
+    });
+
+    animationFrameRef.current = requestAnimationFrame(draw);
   };
 
+  draw();
+};
+
   return (
- <div className="w-[300px]  p-4 mt-8 bg-white rounded-lg shadow-md flex flex-col gap-4 text-gray-900">   
- <div className="text-center pt-2 pb-4  text-gray-800  font-medium">Voice Recorder</div>
- <div className="text-xs px- flex justify-between">
-      <p className="font-bold"> File Name:  <span className=" text-blue-600"> {fileName}</span></p> <p className="flex items-center gap-1 text-green-700">Saved <CircleCheckBig size={20}/></p>
+    <div className="w-[300px] flex-1 p-4 mt-8 bg-white rounded-lg shadow-md flex flex-col gap-4 text-gray-900">
+      <div className="text-center pt-2 pb-4  text-gray-800  font-medium">Voice Recorder</div>
+      <div className="text-xs px- flex justify-between">
+        <p className="font-bold"> File Name:  <span className=" text-blue-600"> {fileName}</span></p> <p className="flex items-center gap-1 text-green-700">Saved <CircleCheckBig size={20} /></p>
       </div>
       <div className="flex gap-4 ">
-      
+
         <label className="text-sm">
-        Input:
-         
+          Input:
+
         </label>
 
-         <select
-            value={selectedDeviceId}
-            onChange={(e) => setSelectedDeviceId(e.target.value) }
-            className="border w-50 text-xs"
-          >
-            {devices.map((device) => (
-              <option key={device.deviceId} value={device.deviceId}>
-                {device.label || `Microphone ${device.deviceId}`}
-              </option>
-            ))}
-          </select>
+        <select
+          value={selectedDeviceId}
+          onChange={(e) => setSelectedDeviceId(e.target.value)}
+          className="border w-50 text-xs"
+        >
+          {devices.map((device) => (
+            <option key={device.deviceId} value={device.deviceId}>
+              {device.label || `Microphone ${device.deviceId}`}
+            </option>
+          ))}
+        </select>
       </div>
- 
+
       <canvas
         ref={canvasRef}
-        width="280"
-        height="100"
+        className="flex-1 w-full"
         style={{
           border: "1px solid #ccc",
           borderRadius: "10px",
-         background:"#000",
+          background: "#000",
           marginTop: "20px",
         }}
       ></canvas>
-
       <div className="flex gap-1">
-  
-    {!recording ? (
-        <button
-          className="flex cursor-pointer justify-center text-sm items-center gap-1 w-full px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-         onClick={startRecording} disabled={recording}
-        ><MdFiberManualRecord size={18}/>
 
-          Record
-        </button>
-      ) : (
-        <button
-          className="flex cursor-pointer justify-center text-sm items-center gap-1 w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          onClick={stopRecording} disabled={!recording}
-        >
-          <FaStop ize={18}/>
-          Stop
-        </button>
-      )}
+        {!recording ? (
+          <button
+            className="flex cursor-pointer justify-center text-sm items-center gap-1 w-full px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            onClick={startRecording} disabled={recording}
+          ><MdFiberManualRecord size={18} />
 
-      {/* Save Button */}
-      <button
-        className="flex cursor-pointer justify-center items-center text-sm gap-2 w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        onClick={uploadToFirebase} disabled={!audioBlob || !fileName}>
+            Record
+          </button>
+        ) : (
+          <button
+            className="flex cursor-pointer justify-center text-sm items-center gap-1 w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={stopRecording} disabled={!recording}
+          >
+            <FaStop ize={18} />
+            Stop
+          </button>
+        )}
+
+        {/* Save Button */}
+        <button
+          className="flex cursor-pointer justify-center items-center text-sm gap-2 w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          onClick={uploadToFirebase} disabled={!audioBlob || !fileName}>
           <FaSave />
 
-        Save
-      </button>
+          Save
+        </button>
 
-</div> 
-  
+      </div>
 
 
-{/* { !recording? <button className="record-btn" onClick={startRecording} disabled={recording}>
+
+      {/* { !recording? <button className="record-btn" onClick={startRecording} disabled={recording}>
           Record
         </button> : 
      <button  className="stop-btn" onClick={stopRecording} disabled={!recording}>

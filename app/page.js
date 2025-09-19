@@ -3,7 +3,7 @@ import CodeLetterPreview from "@/components/CodeLetterPreview";
 import Header from "@/components/Header";
 import ReportingSelector from "@/components/ReportingSelector";
 import VoiceRecorder from "@/components/VoiceRecorder";
-import TimerDisplay from "@/components/TimerDisplay";
+import TimerDisplay from "@/components/TimerDisplay/TimerDisplay";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -32,39 +32,37 @@ export default function Home() {
   console.log(data);
 
   return (
-<div className="w-full h-[100dvh] bg-gray-50 pt-5 flex justify-evenly">
+    <div className="w-full h-[100dvh] bg-gray-50 pt-5 flex justify-evenly">
 
       {/* Left side */}
       <ReportingSelector data={data} />
 
-    {/* Middle Section */}
-<div className="min-w-[800px] w-[850px] h-[95vh] rounded-lg flex flex-col items-center justify-center">
-  <Header />
+      {/* Middle Section */}
+      <div className="min-w-[800px] w-[850px] h-[95vh] rounded-lg flex flex-col items-center justify-center">
+        <Header />
 
-  {/* Preview screen */}
-  <div className="w-[95%] min-h-[450px]  border-8 border-black bg-gray-200 rounded-3xl flex flex-col items-center justify-center text-center text-lg">
-   <Image
-      src="/Primary_Logo.png"
-      alt="Example Image"
-      width={500}
-      height={300}
-    />
-  
-  
-   
-  </div>
+        {/* Preview screen */}
+        <div className="w-[95%] min-h-[450px]  border-8 border-black bg-gray-200 rounded-3xl flex flex-col items-center justify-center text-center text-lg">
+         
+          <Image
+            src="/Primary_Logo.png"
+            alt="Example Image"
+            width={500}
+            height={300}
+          />
+        </div>
 
-  <div className="mt-auto mb-6">
-    <TimerDisplay />
-  </div>
-</div>
+        <div className="mt-auto mb-6">
+          <TimerDisplay />
+        </div>
+      </div>
 
 
       {/* Right side */}
-      <div className="w-[300px] h-[95vh] mr-2">
+      <div className="w-[300px] h-[95vh] mr-2 flex flex-col">
         <CodeLetterPreview />
 
-        <VoiceRecorder />
+        <VoiceRecorder/>
       </div>
     </div>
   );
