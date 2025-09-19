@@ -1,0 +1,145 @@
+body{
+    background-color: green;
+}
+.green-screen{
+   
+   width: 100%;
+   height: 100vh;
+   background: green;
+}
+
+
+.screen-window, .screen2-window{
+    
+
+width: 100%;
+height: 100vh;
+
+    /* width: 1530px;
+    height: 861.87px; */
+  
+    padding: 50px 90px;
+    
+}
+
+.screen-window{
+    
+    color: aliceblue;
+    background-size: contain;
+}
+
+
+.screen2-window{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    color: #fcf6da;
+    z-index: 2;
+    position: absolute;
+}
+
+
+.codeLetter-sub{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: #f7991f;
+    position:absolute ;
+    bottom: 60px;
+    left: 60px;
+    font-size: 3rem;
+    z-index: 1;
+}
+
+.screen-result-no-and-rend-log{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    font-size: 30px;
+}
+
+.result-name-container{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    color: #fec67d;
+}
+
+
+.screen-result-data{
+    width: 100%;
+height: 600px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+
+.screen-student-name {
+    font-size: 10vw;             /* Constrain container width for wrapping */
+        /* Maintain good line spacing */
+    text-align: center;        /* Center align for better visual layout */
+    font-family: 'MLU-Jwala';
+    line-height: 120px;
+}
+
+.screen-campus-name{
+    font-size: 3vw;
+}
+
+
+.position{
+    font-size: 10vw;
+    margin-right: 20px;
+    border-radius: 50%;
+
+    width: 220px;
+    text-align: center;
+}
+
+.screen-result-no{
+    width: 200px;
+    height: 60px;
+    background: #f7991f;
+    color: black;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 35px;
+    border-radius: 15px;
+}
+
+.NOresult{
+
+    font-family: 'Roboto';
+font-size: 150px;
+padding-top: 80px;
+
+
+}
+
+
+
+.nameCategory-container{
+   
+   text-transform: capitalize;
+
+}
+
+
+
+/* 
+screeeeeeeeeeeeeeeeeen 2 code letter */
+
+
+/* .screen2-window{
+
+} */
