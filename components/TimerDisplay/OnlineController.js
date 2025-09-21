@@ -1,6 +1,6 @@
 import { BellRing, Play, TimerReset } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 
 import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
@@ -15,8 +15,31 @@ import { db } from "../../firerbase/firebase"; // Import Firebase database
 
 const OnlineController = () => {
     const [time, setTime] = useState(0);
+    const [clickTimeout, setClickTimeout] = useState(null);
+
     const [isRunning, setIsRunning] = useState(false);
     const [showPauseIcon, setShowPauseIcon] = useState(false);
+
+const autoWarningBellRef = useRef(null);
+  const autoLastBellRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      autoWarningBellRef.current = new Audio("/audio/oldwarning.mp3");
+      autoLastBellRef.current = new Audio("/audio/last.mp3");
+    }
+  }, []);
+
+
+  
+
+  const autoWarningBell = () => {
+    autoWarningBellRef.current.play();
+  };
+
+  const autoLastBell = () => {
+    autoLastBellRef.current.play();
+  };
 
 
     useEffect(() => {
@@ -86,29 +109,32 @@ const OnlineController = () => {
 
 
 
+     const handleBellClick = () => {
+  if (clickTimeout) {
+    // Second click → play warning bell immediately
+    clearTimeout(clickTimeout);
+    setClickTimeout(null);
 
+  autoLastBell();
+  } else {
+    // First click → wait 250ms to see if it's a double click
+    const timeout = setTimeout(() => {
+      setClickTimeout(null);
+        autoWarningBell();
 
+    }, 250);
+    setClickTimeout(timeout);
+  }
+};
 
 
     return (
         <div className="flex flex-1 gap-5 items-center justify-center">
 
-<style jsx>{`
-          .tooltip {
-            transition: opacity 0.3s ease;
-          }
-          .group:hover .tooltip {
-            opacity: 1;
-            transition-delay: 1s; /* show after 1 second */
-          }
-          .tooltip {
-            opacity: 0;
-            transition-delay: 0s; /* hide instantly */
-          }
-        `}</style>
+          
 
             <div className="relative group">
-                <button className="flex items-center gap-2 p-4 cursor-pointer bg-gray-700 hover:bg-gray-800 text-white text-lg font-semibold rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-105">
+                <button onClick={handleBellClick} className="flex items-center gap-2 p-4 cursor-pointer bg-gray-700 hover:bg-gray-800 text-white text-lg font-semibold rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-105">
                     <BellRing className="w-3 h-3" />
                 </button>
                 <span className="tooltip absolute bottom-[-30px] left-1/2 -translate-x-1/2 px-2 py-1 text-xs text-white bg-black rounded">

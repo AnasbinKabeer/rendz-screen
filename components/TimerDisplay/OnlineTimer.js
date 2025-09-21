@@ -1,20 +1,24 @@
-// import { timerData } from "./TimeData";
+'use client'
 import { useState, useEffect, useRef } from "react";
-// import './preTimer.css';
-// import 'animate.css';
-
 import { ref, onValue } from "firebase/database";
 import { db } from "../../firerbase/firebase";
-
+import { TimerData } from "./timer-data";
 
 const OnlineTimer = () => {
-
-  
-
   const [time, setTime] = useState(0);
   const [status, setStatus] = useState("stop");
-  // eslint-disable-next-line no-unused-vars
   const [isRunning, setIsRunning] = useState(false);
+
+
+  const autoWarningBellRef = useRef(null);
+  const autoLastBellRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      autoWarningBellRef.current = new Audio("/audio/oldwarning.mp3");
+      autoLastBellRef.current = new Audio("/audio/last.mp3");
+    }
+  }, []);
 
   useEffect(() => {
     const statusRef = ref(db, "timer/status");
@@ -61,14 +65,58 @@ const OnlineTimer = () => {
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
+  const parseTimeToSeconds = (timeStr) => {
+    const [minutes, seconds] = timeStr.split(":").map(Number);
+    return minutes * 60 + seconds;
+  };
+
+  const warningTimeInSeconds = parseTimeToSeconds(TimerData[0].warning);
+  const finalTimeInSeconds = parseTimeToSeconds(TimerData[0].final);
+
+  const autoWarningBell = () => {
+    autoWarningBellRef.current.play();
+  };
+
+  const autoLastBell = () => {
+    autoLastBellRef.current.play();
+  };
+
+
+
+  useEffect(() => {
+    // console.log("Current time:", time, "Warning target:", warningTimeInSeconds);
+    if (time === warningTimeInSeconds) {
+      console.log("bell ring");
+      autoWarningBell();
+    }
+    if (time === finalTimeInSeconds) {
+      console.log("final bell");
+      autoLastBell();
+
+    }
+  }, [time, warningTimeInSeconds, finalTimeInSeconds]);
+
 
   return (
-    <div className="text-7xl">
+<div className="flex flex-col items-center justify-between">
+    <div className="text-7xl mt-4">{formatTime(time)}</div>
+    <div className="text-xs flex py-1 px-4  gap-2 items-center rounded-lg text-zinc-500">
+      <span className="text-right">
+        <p>4:30</p>
+        <p>Warning </p>
+      </span>
+<hr className="h-6 w-[1px] bg-zinc-300"/>
+      <span>
+        <p>5:30</p>
+        <p>Final bell</p>
+      </span>
 
-        {formatTime(time)}
-    
     </div>
-  );
+
+  </div>
+
+  )
+  
 };
 
 export default OnlineTimer;

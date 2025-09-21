@@ -52,11 +52,12 @@ export default function CodeLetterPreview() {
      window.electron.send('update-data', payload);
  };
 
+ console.log('preview participant', participantsData)
 
-    
+
 
   return (
-    <div className="w-[300px] min-h-[340px]  bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-5">
+    <div className="w-[300px] min-h-[340px]  bg-white rounded-lg  border border-zinc-200  flex flex-col items-center justify-center p-5">
       <div className="text-center">
         <p className="text-sm text-gray-500">Code Letter</p>
         <p className="text-[120px] font-semibold text-blue-700 leading-tight">

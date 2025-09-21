@@ -10,13 +10,13 @@ import { useProgrameContext } from "@/context/programContext";
 export default function Page() {
   const [resultData, setResultData] = useState();
   const [error, setError] = useState(null);
-    const {individualResult, setIndividualResult} = useProgrameContext()
+  const {individualResult, setIndividualResult} = useProgrameContext()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM003&action=pagination&page=1&limit=100"
+          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM003&action=pagination&page=1&limit=500"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -32,9 +32,9 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-gray-50 pt-5 flex justify-evenly">
+    <div className="w-full h-[100dvh] bg-gray-50 pt-5 flex justify-evenly">
       {/* Left side */}
-      <ResultPortal resultData={resultData}  />
+            <ResultPortal resultData={resultData}  />
 
       {/* Middle Section */}
       <div className="min-w-[800px] w-[850px] h-[95vh] rounded-lg flex flex-col items-center">
@@ -46,7 +46,7 @@ export default function Page() {
            <div>
             <p className="text-4xl font-bold">{individualResult.student}</p>
             <p className="text-4xl font-bold">{individualResult.campus}</p>
-           </div> :  
+           </div> : 
             <Image
                src="/Primary_Logo.png"
                alt="Example Image"
@@ -55,15 +55,45 @@ export default function Page() {
              />}
         </div>
 
-        <div className="mt-auto mb-6">
+         <div className=" mt-2  flex gap-3">
+          <div className="relative group">
+            <div className=" w-2 h-2 cursor-pointer rounded-full bg-gray-500"> </div>
+              <span className="tooltip absolute bottom-[-30px] left-1/2 -translate-x-1/2 px-2 py-1 text-xs text-white bg-black rounded">
+                Preview
+              </span>
+           
 
+
+          </div>
+          <div className="relative group">
+            <div className=" w-2 h-2 cursor-pointer rounded-full bg-violet-500"> </div>
+              <span className="tooltip absolute bottom-[-30px]  left-1/2 -translate-x-1/2 px-2 py-1 text-xs text-white bg-black rounded">
+                 Preview
+              </span>
+           
+
+
+          </div>
+          <div className="relative group">
+            <div className=" w-2 h-2 cursor-pointer rounded-full bg-gray-500"> </div>
+              <span className="tooltip absolute bottom-[-30px] left-1/2 -translate-x-1/2 px-2 py-1 text-xs text-white bg-black rounded">
+                Audio
+              </span>
+           
+
+
+          </div>
+    
+        </div>
+
+        <div className="mt-auto mb-2">
             <TeamResult/>
         </div>
       </div>
 
       {/* Right side */}
       <div className="flex flex-col  w-[300px] h-[95vh] mr-2">
-        <ResultRender />
+        <ResultRender data={resultData}/>
       </div>
     </div>
   );

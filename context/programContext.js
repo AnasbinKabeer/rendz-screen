@@ -10,11 +10,16 @@ export function ProgrameProvider({ children }) {
   const [selectedProgram, setSelectedProgram] = useState();
   const [participantsData, setParticipantsData] = useState([]);
   const [announcedCode, setAnnouncedCode] = useState([]); // ✅ NEW
-      const [individualResult, setIndividualResult] = useState(null)
+  const [individualResult, setIndividualResult] = useState(null)
+  const [selectedDeviceId, setSelectedDeviceId] = useState("");
+  const [programName, setProgramName] = useState("")
   
 
   // ResultPortal
   const [selectedResult, setSelectedResult] = useState(null);
+const [announcedIds, setAnnouncedIds,] = useState([])
+  const [programId, setProgramId] = useState(null);
+
 
   return (
     <ProgrameContext.Provider
@@ -31,8 +36,16 @@ export function ProgrameProvider({ children }) {
         selectedResult, 
         setSelectedResult,
         individualResult,
-         setIndividualResult
+         setIndividualResult,
 
+         selectedDeviceId, 
+         setSelectedDeviceId,
+
+         programName, 
+         setProgramName,
+         announcedIds, 
+         setAnnouncedIds,
+         programId, setProgramId
         
         
       }}

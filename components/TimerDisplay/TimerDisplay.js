@@ -15,7 +15,7 @@ export default function TimerDisplay() {
         </div>
 
         {/* Timer Display */}
-        <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="flex flex-1 flex-col items-center justify-evenly">
           <OnlineTimer />
           {/* <p className=" text-7xl">00:00</p>
           <p className="text-xs">~Timer is running~</p> */}
