@@ -32,14 +32,7 @@ export default function TimerDisplay() {
 
         <OnlineController />
 
-        <div className=" items-center justify-center flex gap-2">
-
-          <p className="bg-purple-600 text-white py-1 text-sm px-3 rounded-lg">5 min</p>
-          <p className="bg-amber-100 py-1 px-3 text-sm rounded-lg">8 min</p>
-          <p className="bg-amber-100 py-1 px-3 text-sm rounded-lg">10 min</p>
-          <p className="bg-amber-100 py-1 px-3 text-sm rounded-lg">12 min</p>
-
-        </div>
+       
 
       </div>
     </main>

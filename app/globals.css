@@ -49,3 +49,40 @@ body {
             opacity: 0;
             transition-delay: 0s; /* hide instantly */
           }
+
+
+
+
+
+          @keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes spin-slower {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-spin-slower {
+  animation: spin-slower 20s linear infinite;
+}
+
+@keyframes spin-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+.animate-spin-reverse {
+  animation: spin-reverse 18s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.2; transform: translateY(-10px); }
+  50% { opacity: 0.6; transform: translateY(10px); }
+  100% { opacity: 0.2; transform: translateY(-10px); }
+}
+.animate-shimmer {
+  animation: shimmer 6s ease-in-out infinite;
+}

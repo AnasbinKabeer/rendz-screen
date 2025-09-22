@@ -6,6 +6,7 @@ import { HiSpeakerphone } from "react-icons/hi";
 
 
 
+
 export default function ResultRender({data}) {
   const { selectedResult, setSelectedResult, individualResult, setIndividualResult, programName, setProgramName,
         announcedIds, setAnnouncedIds,  programId, setProgramId

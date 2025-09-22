@@ -16,7 +16,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM003&action=pagination&page=1&limit=500"
+          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM002&action=pagination&page=1&limit=500"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

@@ -1,5 +1,4 @@
 "use client";
-import ResultPortal from "@/components/ResultPortal";
 import { createContext, useState, useContext } from "react";
 
 const ProgrameContext = createContext();
@@ -9,17 +8,21 @@ export function ProgrameProvider({ children }) {
   const [codeData, setCodeData] = useState();
   const [selectedProgram, setSelectedProgram] = useState();
   const [participantsData, setParticipantsData] = useState([]);
-  const [announcedCode, setAnnouncedCode] = useState([]); // ✅ NEW
-  const [individualResult, setIndividualResult] = useState(null)
+  const [announcedCode, setAnnouncedCode] = useState([]);
+  const [individualResult, setIndividualResult] = useState(null);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
-  const [programName, setProgramName] = useState("")
-  
+  const [programName, setProgramName] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
 
-  // ResultPortal
   const [selectedResult, setSelectedResult] = useState(null);
-const [announcedIds, setAnnouncedIds,] = useState([])
+  const [announcedIds, setAnnouncedIds] = useState([]);
   const [programId, setProgramId] = useState(null);
 
+
+  ///special 
+
+   const [time, setTime] = useState(0)
+        const [timeId, setTimeId ] = useState(0);
 
   return (
     <ProgrameContext.Provider
@@ -31,23 +34,29 @@ const [announcedIds, setAnnouncedIds,] = useState([])
         participantsData,
         setParticipantsData,
         announcedCode,
-        setAnnouncedCode, // ✅
-        
-        selectedResult, 
+        setAnnouncedCode,
+        selectedResult,
         setSelectedResult,
         individualResult,
-         setIndividualResult,
+        setIndividualResult,
+        selectedDeviceId,
+        setSelectedDeviceId,
+        programName,
+        setProgramName,
+        announcedIds,
+        setAnnouncedIds,
+        programId,
+        setProgramId,
+        time,
+        setTime,
+        isRunning,
+        setIsRunning,
 
-         selectedDeviceId, 
-         setSelectedDeviceId,
 
-         programName, 
-         setProgramName,
-         announcedIds, 
-         setAnnouncedIds,
-         programId, setProgramId
-        
-        
+
+
+
+time, setTime,        timeId, setTimeId
       }}
     >
       {children}
