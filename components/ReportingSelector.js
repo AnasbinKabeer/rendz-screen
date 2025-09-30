@@ -21,7 +21,8 @@ export default function ReportingSelector() {
     setIsFetching(true);
     try {
       const response = await fetch(
-        "https://rendezvous.abaqas.in/programs/action.php?status=ongoing&action=pagination"
+"https://rendezvous.abaqas.in/campusprograms/action.php?status=ongoing&campusId=JM001&action=pagination&page=1&limit=100"
+        // "https://rendezvous.abaqas.in/programs/action.php?status=ongoing&action=pagination&campusId=JM002"
       );
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const result = await response.json();
@@ -45,10 +46,10 @@ export default function ReportingSelector() {
   // ✅ Custom sort: single letters first, then multi-letter codes, alphabetical
   const sortParticipants = (list) => {
     return [...list].sort((a, b) => {
-      const codeA = a.code.toUpperCase();
-      const codeB = b.code.toUpperCase();
+      const codeA = a.code?.toUpperCase();
+      const codeB = b.code?.toUpperCase();
 
-      if (codeA.length !== codeB.length) return codeA.length - codeB.length;
+      if (codeA?.length !== codeB?.length) return codeA?.length - codeB?.length;
       return codeA.localeCompare(codeB);
     });
   };
@@ -165,7 +166,7 @@ export default function ReportingSelector() {
           {remainingStudents.map((participant) => (
             <button
               key={participant.id}
-              className={`flex justify-between items-center  px-6 py-3  cursor-pointer rounded-lg font-medium text-sm transition-colors duration-100 ${codeData.id === participant.id
+              className={`flex justify-between overflow-hidden items-center  px-6 py-3  cursor-pointer rounded-lg font-medium text-sm transition-colors duration-100 ${codeData.id === participant.id
                 ? "bg-violet-600 text-white hover:bg-violet-500"
                 : "bg-gray-100 text-gray-800 hover:bg-gray-50"
                 }`}

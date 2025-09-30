@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const ProgrameContext = createContext();
 
@@ -12,21 +12,34 @@ export function ProgrameProvider({ children }) {
   const [individualResult, setIndividualResult] = useState(null);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const [programName, setProgramName] = useState("");
-  const [isRunning, setIsRunning] = useState(false);
-
   const [selectedResult, setSelectedResult] = useState(null);
   const [announcedIds, setAnnouncedIds] = useState([]);
   const [programId, setProgramId] = useState(null);
 
+  /// special (timer states)
+  const [time, setTime] = useState(0);
+  const [timeId, setTimeId] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+      const [showPauseIcon, setShowPauseIcon] = useState(false);
 
-  ///special 
 
-   const [time, setTime] = useState(0)
-        const [timeId, setTimeId ] = useState(0);
+
+  // Timer effect
+  useEffect(() => {
+    let timerInterval;
+    if (isRunning) {
+      timerInterval = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    }
+    return () => clearInterval(timerInterval);
+  }, [isRunning]);
 
   return (
     <ProgrameContext.Provider
       value={{
+        user,
+        setUser,
         codeData,
         setCodeData,
         selectedProgram,
@@ -49,14 +62,12 @@ export function ProgrameProvider({ children }) {
         setProgramId,
         time,
         setTime,
+        timeId,
+        setTimeId,
         isRunning,
         setIsRunning,
-
-
-
-
-
-time, setTime,        timeId, setTimeId
+        showPauseIcon, 
+        setShowPauseIcon
       }}
     >
       {children}

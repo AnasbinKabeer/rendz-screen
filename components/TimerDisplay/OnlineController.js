@@ -1,14 +1,6 @@
-import { BellRing, Play, TimerReset } from "lucide-react";
-import { FaPlay } from "react-icons/fa";
+import { BellRing, TimerReset } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-
-
-
 import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
-import { BiReset, } from "react-icons/bi";
-
-
-
 import { ref, set } from "firebase/database";
 import { db } from "../../firerbase/firebase"; // Import Firebase database
 import { TimerData } from "./timer-data";
@@ -17,11 +9,8 @@ import { useProgrameContext } from "@/context/programContext";
 
 
 const OnlineController = () => {
-    const [time, setTime] = useState(0);
     const [clickTimeout, setClickTimeout] = useState(null);
-const {timeId, setTimeId} =useProgrameContext()
-    const [isRunning, setIsRunning] = useState(false);
-    const [showPauseIcon, setShowPauseIcon] = useState(false);
+    const { timeId, setTimeId, isRunning, setIsRunning, time, setTime, showPauseIcon, setShowPauseIcon } = useProgrameContext()
 
     const autoWarningBellRef = useRef(null);
     const autoLastBellRef = useRef(null);
@@ -34,8 +23,6 @@ const {timeId, setTimeId} =useProgrameContext()
     }, []);
 
 
-
-
     const autoWarningBell = () => {
         autoWarningBellRef.current.play();
     };
@@ -45,41 +32,24 @@ const {timeId, setTimeId} =useProgrameContext()
     };
 
 
-    useEffect(() => {
-        let timerInterval;
-        if (isRunning) {
-            timerInterval = setInterval(() => {
-                setTime((prevTime) => prevTime + 1);
-            }, 1000);
-        }
-        return () => clearInterval(timerInterval);
-    }, [isRunning]);
-
-
-
-
-
     const updateTimerStatus = (status) => {
         set(ref(db, "timer/status"), status);
-        set(ref(db, "timer/time"), time); // Sync current time
+        set(ref(db, "timer/time"), time);
     };
 
 
-const handleClick= (items)=> {
-            set(ref(db, "timer/timeId"), items.id);
-
-}
-
-
-
+    const handleClick = (items) => {
+        set(ref(db, "timer/timeId"), items.id);
+        setTimeId(items.id)
+    }
 
 
     const startTimer = () => {
-
         setIsRunning(true);
         setShowPauseIcon(true);
         updateTimerStatus("start");
     };
+    
 
     const pauseTimer = () => {
         setIsRunning(false);
@@ -117,17 +87,14 @@ const handleClick= (items)=> {
 
     const handleBellClick = () => {
         if (clickTimeout) {
-            // Second click → play warning bell immediately
             clearTimeout(clickTimeout);
             setClickTimeout(null);
-
             autoLastBell();
         } else {
             // First click → wait 250ms to see if it's a double click
             const timeout = setTimeout(() => {
                 setClickTimeout(null);
                 autoWarningBell();
-
             }, 250);
             setClickTimeout(timeout);
         }
@@ -136,11 +103,7 @@ const handleClick= (items)=> {
 
     return (
         <>
-
             <div className="flex flex-1 gap-5 items-center justify-center">
-
-
-
                 <div className="relative group">
                     <button onClick={handleBellClick} className="flex items-center gap-2 p-4 cursor-pointer bg-gray-700 hover:bg-gray-800 text-white text-lg font-semibold rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-105">
                         <BellRing className="w-3 h-3" />
@@ -149,8 +112,6 @@ const handleClick= (items)=> {
                         Alarm
                     </span>
                 </div>
-
-
                 <div className="relative group">
                     <div className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-105">
                         {showPauseIcon ? (
@@ -172,13 +133,6 @@ const handleClick= (items)=> {
                         Reset
                     </span>
                 </div>
-
-
-
-
-
-
-
             </div>
 
             <div className=" items-center justify-center flex gap-2">
@@ -186,17 +140,11 @@ const handleClick= (items)=> {
                     <p
                         key={idx} //
                         onClick={() => handleClick(item)}
-                        className={` ${timeId===item.id? "bg-violet-600 text-white":"bg-yellow-100 text-zinc-500"}  py-1 text-sm px-3 rounded-lg cursor-pointer`}
-                    >
+                        className={` ${timeId === item.id ? "bg-violet-600 text-white" : "bg-yellow-100 text-zinc-500"}  py-1 text-sm px-3 rounded-lg cursor-pointer`}>
                         {item.time} {/* Replace with item property */}
                     </p>
                 ))}
-
-
-
-
             </div>
-
         </>
     );
 };

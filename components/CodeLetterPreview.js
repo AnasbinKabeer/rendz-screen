@@ -58,17 +58,17 @@ export default function CodeLetterPreview() {
 
   return (
     <div className="w-[300px] min-h-[340px]  bg-white rounded-lg  border border-zinc-200  flex flex-col items-center justify-center p-5">
-      <div className="text-center">
+      <div className="text-center w-full">
         <p className="text-sm text-gray-500">Code Letter</p>
         <p className="text-[120px] font-semibold text-blue-700 leading-tight">
           {codeData?.code || "~"}
         </p>
-        <p className="text-gray-800">{codeData?.student || "No Student"}</p>
+        <p className="text-gray-800 w-full overflow-hidden">{codeData?.student || "No Student"}</p>
       </div>
 
       {/* Start button */}
       <button
-        className="w-full mt-3 py-3 px-6 rounded-lg text-sm font-medium bg-gray-800 text-white hover:bg-gray-700 transition"
+        className="w-full  mt-3 py-3 px-6 rounded-lg text-sm font-medium bg-gray-800 text-white hover:bg-gray-700 transition"
         onClick={() => sendCODE(codeData)}
       >
         Start Program

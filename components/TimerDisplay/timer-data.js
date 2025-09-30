@@ -16,8 +16,8 @@ export const TimerData = [
 
     {
         id: 2,
-        warning: "7:00",
-        final: "8:00",
+        warning: "07:00",
+        final: "08:00",
         time: "8:00"
     },
     

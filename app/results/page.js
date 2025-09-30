@@ -6,6 +6,7 @@ import ResultRender from "@/components/ResultRender";
 import Image from "next/image";
 import TeamResult from "@/components/TeamResult";
 import { useProgrameContext } from "@/context/programContext";
+import PlayAudio from "@/components/PlayRecorder";
 
 export default function Page() {
   const [resultData, setResultData] = useState();
@@ -16,7 +17,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM002&action=pagination&page=1&limit=500"
+          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM001&action=pagination&page=1&limit=500"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -94,7 +95,9 @@ export default function Page() {
       {/* Right side */}
       <div className="flex flex-col  w-[300px] h-[95vh] mr-2">
         <ResultRender data={resultData}/>
+        {/* <Test/> */}
       </div>
+
     </div>
   );
 }
