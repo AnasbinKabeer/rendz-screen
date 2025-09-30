@@ -32,36 +32,37 @@ function SettingsPortal() {
     const [stageId, setStageId] = useState(null);
 
     // Build URL dynamically
-    const url = stageId
-        ? `https://rendezvous.abaqas.in/campusresults/action.php?program=${stageId}&action=proResult`
-        : null;
+    // const url = stageId
+    //     ? `https://rendezvous.abaqas.in/campusresults/action.php?program=${stageId}&action=proResult`
+    //     : null;
 
     // ✅ Set default stageId (first item)
-    useEffect(() => {
-        if (scheduleData?.length > 0 && !stageId) {
-            setStageId(scheduleData[0].id);
-        }
-    }, [stageId]);
+    // useEffect(() => {
+    //     if (scheduleData?.length > 0 && !stageId) {
+    //         setStageId(scheduleData[0].id);
+    //     }
+    // }, [stageId]);
 
     // ✅ Fetch results when stageId changes
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!url) return;
-            try {
-                setSelectedResult(null); // reset before fetching
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const result = await response.json();
-                setSelectedResult(result.data);
-            } catch (err) {
-                console.error("Error fetching:", err.message);
-            }
-        };
+//   useEffect(() => {
+//     const fetchData = async () => {
+//         if (!url) return;
+//         try {
+//             setSelectedResult(null);
+//             const response = await fetch(url);
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             const result = await response.json();
+//             setSelectedResult(result.data);
+//         } catch (err) {
+//             console.error("Error fetching:", err.message);
+//         }
+//     };
 
-        fetchData();
-    }, [stageId]);
+//     fetchData();
+// }, [stageId, setSelectedResult, url]); 
+
 
     const handleClick = (data) => {
         setIndividualResult(null);

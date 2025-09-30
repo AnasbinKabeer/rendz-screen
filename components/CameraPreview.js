@@ -1,38 +1,38 @@
-"use client";
-import { useRef, useEffect } from "react";
+// "use client";
+// import { useRef, useEffect } from "react";
 
-export default function CameraPreview() {
-  const videoRef = useRef(null);
+// export default function CameraPreview() {
+//   const videoRef = useRef(null);
 
-  useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.error("Error accessing camera: ", err);
-      }
-    };
+//   useEffect(() => {
+//     const startCamera = async () => {
+//       try {
+//         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+//         if (videoRef.current) {
+//           videoRef.current.srcObject = stream;
+//         }
+//       } catch (err) {
+//         console.error("Error accessing camera: ", err);
+//       }
+//     };
 
-    startCamera();
+//     startCamera();
 
-    // Cleanup: stop camera when component unmounts
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, []);
+//     // Cleanup: stop camera when component unmounts
+//     return () => {
+//       if (videoRef.current && videoRef.current.srcObject) {
+//         videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+//       }
+//     };
+//   }, []);
 
-  return (
-    <video
-      ref={videoRef}
-      autoPlay
-      playsInline
-      muted
-      className="w-full h-full object-cover rounded-3xl"
-    />
-  );
-}
+//   return (
+//     <video
+//       ref={videoRef}
+//       autoPlay
+//       playsInline
+//       muted
+//       className="w-full h-full object-cover rounded-3xl"
+//     />
+//   );
+// }

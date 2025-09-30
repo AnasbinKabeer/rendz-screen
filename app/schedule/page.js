@@ -14,29 +14,29 @@ export default function Page() {
   const [error, setError] = useState(null);
     const {individualResult, setIndividualResult} = useProgrameContext()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM003&action=pagination&page=1&limit=500"
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = await response.json();
-        setResultData(result.data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM003&action=pagination&page=1&limit=500"
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const result = await response.json();
+  //       setResultData(result.data);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="w-full h-[100dvh] bg-gray-50 pt-5 flex justify-evenly">
       {/* Left side */}
-      <StagePortal resultData={resultData}/>
+      <StagePortal />
       {/* Middle Section */}
       <div className="min-w-[800px] w-[850px] h-[95vh] rounded-lg flex flex-col items-center">
         <Header />

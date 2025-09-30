@@ -107,31 +107,37 @@ export default function ReportingSelector() {
     }
   };
 
-  useEffect(() => {
-    if (data && data.length > 0 && !selectedProgram) {
-      // select the first program
-      const firstProgram = data[0];
-      const firstValue = `${firstProgram.name}|${firstProgram.category}`;
+ useEffect(() => {
+  if (data && data.length > 0 && !selectedProgram) {
+    const firstProgram = data[0];
+    const firstValue = `${firstProgram.name}|${firstProgram.category}`;
 
-      // update context
-      setSelectedProgram(firstValue);
+    setSelectedProgram(firstValue);
 
-      const newParticipantsData = sortParticipants(
-        firstProgram?.participantsData || []
-      );
+    const newParticipantsData = sortParticipants(
+      firstProgram?.participantsData || []
+    );
 
-      setParticipantsData(newParticipantsData);
-      setAnnouncedCode([]);
+    setParticipantsData(newParticipantsData);
+    setAnnouncedCode([]);
 
-      if (newParticipantsData.length > 0) {
-        setCodeData(newParticipantsData[0]);
-        setSelectedCode(newParticipantsData[0].id);
-      } else {
-        setCodeData(null);
-        setSelectedCode(null);
-      }
+    if (newParticipantsData.length > 0) {
+      setCodeData(newParticipantsData[0]);
+      setSelectedCode(newParticipantsData[0].id);
+    } else {
+      setCodeData(null);
+      setSelectedCode(null);
     }
-  }, [data, selectedProgram]);
+  }
+}, [
+  data,
+  selectedProgram,
+  setSelectedProgram,
+  setParticipantsData,
+  setAnnouncedCode,
+  setCodeData,
+]);
+
 
   return (
     <div className="w-[300px]   ml-2">
