@@ -8,7 +8,7 @@ export default function ReportingSelector() {
 
 
   const [data, setData] = useState();
- 
+  
   const [isFetching, setIsFetching] = useState(false);
   const {
     selectedProgram, setSelectedProgram,
@@ -138,6 +138,7 @@ export default function ReportingSelector() {
   setCodeData,
 ]);
 
+console.log("selectedProgram", data)
 
   return (
     <div className="w-[300px]   ml-2">

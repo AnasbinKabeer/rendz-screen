@@ -1,13 +1,15 @@
 "use client";
 import { useProgrameContext } from "@/context/programContext";
-import React from "react";
+import React, { useState } from "react";
 
 export default function CodeLetterPreview() {
   const {
     codeData, setCodeData,
     participantsData,
-    announcedCode, setAnnouncedCode
+    announcedCode, setAnnouncedCode , selectedProgram
   } = useProgrameContext();
+
+  const [started, setStarted] = useState(false)
 
   // ✅ Custom sort same as ReportingSelector
   const sortParticipants = (list) => {
@@ -45,7 +47,9 @@ export default function CodeLetterPreview() {
      if (code === null) {
          payload = { code: "" };
      } else {
-         payload = { code: codeData?.code || "" };
+         payload = { code: codeData?.code || "" ,
+          selectedProgram
+         };
      }
 
      console.log("Sending code: ", payload);
@@ -68,22 +72,27 @@ export default function CodeLetterPreview() {
 
       {/* Start button */}
       <button
-        className="w-full  mt-3 py-3 px-6 rounded-lg text-sm font-medium bg-gray-800 text-white hover:bg-gray-700 transition"
-        onClick={() => sendCODE(codeData)}
+        className={`w-full cursor-pointer mt-3 py-3 px-6 rounded-lg text-sm font-medium ${started? "bg-green-600 hover:bg-green-600" :  "bg-gray-800 hover:bg-gray-700" } text-white  transition`}
+        onClick={() => {sendCODE(codeData);
+          setStarted(true)
+        }}
       >
-        Start Program
+        {started ? "Started" :  "Start Program"}
+       
       </button>
 
       {/* Complete button */}
       <button
-        className="w-full mt-3 py-3 px-6 text-sm rounded-lg font-medium bg-white text-gray-800 border border-gray-300 hover:bg-gray-100 transition"
+        className="w-full cursor-pointer mt-3 py-3 px-6 text-sm rounded-lg font-medium bg-white text-gray-800 border border-gray-300 hover:bg-gray-100 transition"
         onClick={() => {
           handleAnnounce();
           sendCODE(null);
+    setStarted(false)
         }}
         disabled={!codeData}
       >
-        Complete
+        {started ? "Complete" :  "Not Complete"}
+        
       </button>
     </div>
   );

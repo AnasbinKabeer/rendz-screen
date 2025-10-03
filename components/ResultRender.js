@@ -15,13 +15,14 @@ export default function ResultRender({ data }) {
     setProgramId,
     announcedIds,
     setAnnouncedIds,
-    individualResult
+    individualResult,
+    countdown, setCountdown,
+ showGo, setShowGo
   } = useProgrameContext();
 
 
 
-  const countdown = 0
-  const showGo = false
+ 
 
   const newDataFiltered = selectedResult
     ?.filter((item) => ["1", "2", "3"].includes(item.rank))
@@ -152,13 +153,7 @@ export default function ResultRender({ data }) {
           </p>
 
           {/* Small bouncing effect when "Go" appears */}
-          {showGo && (
-            <div className="absolute z-20">
-              <p className="text-5xl font-bold text-green-500 animate-bounce drop-shadow-md">
-                Go
-              </p>
-            </div>
-          )}
+          
         </div>
       </div>
 

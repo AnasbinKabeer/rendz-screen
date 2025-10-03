@@ -22,6 +22,9 @@ export function ProgrameProvider({ children }) {
   const [isRunning, setIsRunning] = useState(false);
       const [showPauseIcon, setShowPauseIcon] = useState(false);
 
+      const [countdown, setCountdown] = useState(null); // countdown timer
+        const [showGo, setShowGo] = useState(false); 
+
 
 
   // Timer effect
@@ -67,7 +70,9 @@ export function ProgrameProvider({ children }) {
         isRunning,
         setIsRunning,
         showPauseIcon, 
-        setShowPauseIcon
+        setShowPauseIcon,
+        countdown, setCountdown,
+        showGo, setShowGo
       }}
     >
       {children}

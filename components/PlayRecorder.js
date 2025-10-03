@@ -15,15 +15,15 @@ const PlayAudio = ({ results }) => {
 
   const [currentAudio, setCurrentAudio] = useState(null);
   const [playingIndex, setPlayingIndex] = useState(null);
-  const [countdown, setCountdown] = useState(null); // countdown timer
-  const [showGo, setShowGo] = useState(false); // show "Go" after countdown
+  // show "Go" after countdown
 
   const countdownRef = useRef(null);
   const fadeInRef = useRef(null);
   const fadeOutRef = useRef(null);
   const autoStopRef = useRef(null);
 
-  const { selectedResult  ,programId } = useProgrameContext();
+  const { selectedResult  ,programId , setCountdown,
+ setShowGo} = useProgrameContext();
   const programIdFilter =  String(programId)
 
   // result {. "4602"  } 
