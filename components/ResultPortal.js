@@ -23,7 +23,7 @@ function ResultPortal() {
     setIsFetching(true);
     try {
       const response = await fetch(
-        "https://rendezvous.abaqas.in/campusprograms/action.php?status=judged&campusId=JM001&action=pagination&page=1&limit=500"
+        "https://rendezvous.abaqas.in/programs/action.php?status=judged&action=pagination&page=1&limit=500"
       );
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const result = await response.json();
@@ -54,7 +54,7 @@ function ResultPortal() {
       try {
         setSelectedResult(null);
         const response = await fetch(
-          `https://rendezvous.abaqas.in/campusresults/action.php?program=${programId}&action=proResult`
+          `https://rendezvous.abaqas.in/results/action.php?program=${programId}&action=proResult`
         );
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const result = await response.json();

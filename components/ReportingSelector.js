@@ -21,7 +21,7 @@ export default function ReportingSelector() {
     setIsFetching(true);
     try {
       const response = await fetch(
-"https://rendezvous.abaqas.in/campusprograms/action.php?status=ongoing&campusId=JM001&action=pagination&page=1&limit=100"
+"https://rendezvous.abaqas.in/programs/action.php?status=ongoing&action=pagination&page=1&limit=100"
         // "https://rendezvous.abaqas.in/programs/action.php?status=ongoing&action=pagination&campusId=JM002"
       );
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
